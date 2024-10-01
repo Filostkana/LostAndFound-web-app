@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+  <form class="row g-3" action="/register" method="post">
+    <div class="text-start col-md-6 mb-3">
+      <label for="inputFirstName4" class="form-label">First name(<i class="text-secondary">Optional</i> )
+      </label>
+      <input autocomplete="off" class="form-control" name="firstname" id="inputFirstName4" placeholder="First name" type="text">
+    </div>
+    <div class="text-start col-md-6 mb-3">
+      <label for="inputLastName4" class="form-label">Last name(<i class="text-secondary text-left">Optional</i>)</label>
+      <input autocomplete="off" class="form-control" name="lastname" id="inputLastName4" placeholder="Last name" type="text">
+    </div>
+    <div class="text-start col-md-6 mb-3">
+      <label for="phoneNumber4" class="form-label">Phone number(<i class="text-secondary">Required</i>)</label>
+      <input autocomplete="off" type="text" class="form-control" name="ph_number" id="phoneNumber4" placeholder="Phone number" required>
+    </div>
+    <div class="text-start col-md-7 mb-3">
+      <label for="userName4" class="form-label">Username(<i class="text-secondary">Required</i>)</label>
+      <input autocomplete="off" type="text" class="form-control" name="username" id="userName4" placeholder="Create username" required>
+    </div>
+    <div class="text-start col-7">
+      <label for="passWord4" class="form-label">Password(<i class="text-secondary">Required</i>)</label>
+      <input autocomplete="off" type="password" class="form-control" name="password" id="passWord4" placeholder="Password" required>
+    </div>
+    <div class="text-start col-7">
+      <input autocomplete="off" type="password" class="form-control" name="confirmation" placeholder="Password (again)" required>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Register</button>
+    </div>
+  </form>    
+{% endblock %}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- http://getbootstrap.com/docs/5.3/ -->
+        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <script src="/static/bootstrap.bundle.min.js"></script>
+
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <title>Lost & Found: {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+      
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-gradient pt-2">
+         <div class="container-fluid">
+           <a class="navbar-brand" href="/"><span>lost</span><span class="red">&</span><span>found</span></a>
+           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+           </button>
+           <div class="collapse navbar-collapse fs-4" id="navbarSupportedContent">
+             <ul class="navbar-nav ms-lg-5  mb-5 mb-lg-0">
+               <li class="nav-item ms-lg-5">
+                 <a class="nav-link bg-body-tertiary" aria-current="page" href="/">Home</a>
+               </li>
+               <li class="nav-item ms-lg-5">
+                 <a class="nav-link bg-body-tertiary" href="/query?condtion=lost">I lost</a>
+               </li>
+               <li class="nav-item ms-lg-5">
+                 <a class="nav-link bg-body-tertiary" href="/query?condtion=found">I found</a>
+               </li>
+             </ul>
+             {% if session["user_id"] %}
+               <ul class="navbar-nav me-2 d-flex ms-auto me-auto">
+                 <li class="nav-item dropdown text-center">
+                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                     <img class="img-fluid" src="/static/person-circle.svg">
+                     <small class="fs-6">{{ session["username"] }}</small>
+                   </a>
+                   <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="/change_password">Change password</a></li>
+                     <li><hr class="dropdown-divider"></li>
+                     <li><a class="dropdown-item" href="/logout">Log out</a></li>
+                   </ul>
+                 </li>
+               </ul>
+             {% else %}
+               <ul class="navbar-nav ms-auto me-2 d-flex">
+                 <li class="nava-item">
+                   <a href="/login" class="nav-link">
+                     Log in
+                   </a>
+                 </li>
+                 <li class="nava-item">
+                   <a href="/register" class="nav-link">
+                     Register
+                   </a>
+                 </li>
+             {% endif %}
+           </div>
+         </div>
+       </nav>
+      
+        {% if get_flashed_messages() %}
+      
+          {% if session["info"] == "info" %}
+            <div class="alert alert-primary d-flex align-items-center" role="alert">
+              <div>
+                {{ get_flashed_messages() | join(" ") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if session["info"] == "success" %}
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+              <div>
+                {{ get_flashed_messages() | join(" ") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if session["info"] == "warning" %}
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+              <div>
+                {{ get_flashed_messages() | join(" ") }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if session["info"] == "danger" %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <div>
+                {{ get_flashed_messages() | join(" ") }}
+              </div>
+            </div>
+          {% endif %}
+
+        {% endif %}
+
+        <main class="container py-5 text-center justify-content-center">
+            {% block main %}{% endblock %}
+        </main>
+
+    </body>
+
+</html>

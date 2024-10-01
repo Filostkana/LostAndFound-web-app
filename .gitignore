@@ -1,0 +1,11 @@
+# Ignore Python cache directories
+__pycache__/
+
+# Ignore Flask session files
+flask_session/
+
+# Ignore Python compiled files
+*.pyc
+
+# Ignore environment variable files
+*.env       

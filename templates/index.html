@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+    <h1 class="mb-5">Latest posts</h1>
+    {% for row in rows %}
+
+        <div class="card ms-auto me-auto mb-4 text-start" id="{{ row.id }}" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="card-header">
+                    <p class="card-text">
+                        <span class="h5">{{ row.condtion }}er: {{ row.username }}</span>
+                        <br>
+                        <i><span class="h6">Tel: </span>0{{ row.phone_number }}</i>
+                    </p>
+                    <p class="card-text text-end">
+                        <small class="card-text ">{{ row.datet }}</small>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <img src="{{ row.image_url }}" class="img-fluid me-md-3" alt="a vehicle image">
+                </div>
+                <div class="col-md-7 ms-3 mt-1 mb-3">
+                    <h5 class="card-title">{{ row.condtion }} {{ row.type }}</h5>
+                    <p class="card-text"><span class="h5">Brand: </span>{{ row.brand.upper() }}</p>
+                    <p class="card-text"><span class="h5">Year: </span>{{ row.manuf_year }}</p>
+                    <p class="card-text"><span class="h5">Color: </span>{{ row.color.capitalize() }}</p>
+                    {% if row.property == "vehicles" %}
+                        <p class="card-text"><span class="h5">Plate number: </span>{{ row.plate_number}}</p>
+                        <p class="card-text"><span class="h5">chassis number: </span>{{ row.chassis_number }}</p>
+                    {% else %}
+                        <p class="card-text"><span class="h5">serial_number:</span>{{ row.serial_number }}</p>
+                    {% endif %}
+                    {% if row.property == "others" %}
+                        <p class="card-text">
+                            <span class="h5">Description: </span><br>
+                            {{ row.desc }}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    {% endfor %}
+      
+{% endblock %}

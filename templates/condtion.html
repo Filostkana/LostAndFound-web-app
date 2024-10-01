@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    I {{ condtion }}
+{% endblock %}
+
+{% block main %}
+<div class="row mt-2 mb-4">
+    <div class="col mb-3">
+      <div class="dropdown-center">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          What have you {{ condtion }}?
+        </button>
+        <ul class="dropdown-menu">
+          {% for property in rows %}
+            <li>
+              <a class="dropdown-item" href="/query?condtion={{ condtion }}&property={{ property.property }}">
+                {{ property["property"] }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="row mb-4">
+    <div class="col">
+      <h2>{{ condtion }} propertys</h2>
+    </div>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for row in rows %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="/static/images/card.def.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ row.property }}</h5>
+            <p class="card-text">
+              About {{ row.count }} {{ condtion }} {{ row.property }} were published on the website between {{ row.first }} and {{ row.last }} 
+            </p>
+          </div>
+          <div class="card-footer">
+              <a href="/query?condtion=found&property={{ row.property }}" class="btn btn-primary">
+              Sea all {{ condtion }} {{ row.property }}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  {{ other_condtion }} vehicles
+{% endblock %}
+
+{% block main %}
+
+  <div class="row">
+    <div class="col">
+      <h2>{{ condtion }} {{ property }} description</h2>
+    </div>
+  </div>
+
+  <form class="row g-3 text-start" style="overflow: auto;" action="/post" method="post">
+    {% if property == "other" %}
+      <div class="col-5 col-lg-4">
+        <label for="inputType" class="form-label">Type</label>
+        <input autocomplete="off" name="type" id="inputType" class="form-control searchinput" type="text" 
+        maxlength="10" placeholder="What the type of property wich you foun" required>
+      </div>
+
+      <div class="col-5 col-lg-4">
+        <label for="inputBrand" class="form-label">Brand</label>
+        <input autocomplete="off" name="brand" id="inputBrand" class="form-control searchinput" type="text" maxlength="10" placeholder="What brand of wech">
+      </div>
+
+      <div class="col-6 col-lg-4">
+        <label for="inputYear" class="form-label">Manufction Year</label>
+        <input autocomplete="off" name="manuf_year" id="inputYear" class="form-control searchinput" type="number" min="1" max="{{ thes_year }}" placeholder="ex: 1999">
+      </div>
+
+      <div class="col-5">
+        <label for="inputColor" class="form-label">Color</label>
+        <input autocomplete="off" name="color" id="inputColor" class="form-control searchinput" placeholder="What color of wech">
+      </div>
+    {% else %}
+      <div class="col-5 col-lg-4">
+        <label for="inputType" class="form-label">{{ property }} Type</label>
+        <select name="type_id" id="inputType" class="form-select searchinput" required>
+          <option selected disabled value="">Choose</option>
+          {% if property == "vehicle" %}
+            {%for type in types %}
+              <option value="{{ type.id }}">
+                {{ type.vehicle.capitalize() }}
+              </option>
+            {% endfor %}
+          {% else %}
+            {% for type in types %}
+              <option value="{{ type.id }}">
+                {{ type.device.capitalize() }}
+              </option>
+            {% endfor %}
+          {% endif %}                                         
+        </select>
+      </div>
+
+      <div class="col-5 col-lg-4">
+        <label for="inputBrand" class="form-label">Brand</label>
+        <select name="brand_id" id="inputBrand" class="form-select searchinput" required>
+          <option selected disabled value="">Choose</option>
+          {% for brand in brands %}
+            <option value="{{ brand.id }}">{{ brand.brand.upper() }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-6 col-lg-4">
+        <label for="inputYear" class="form-label">Manufction Year</label>
+        <select name="manuf_year" id="inputYear" class="form-select searchinput" required>
+          <option selected disabled value="">Choose</option>
+          {% for i in years %}
+            <option value="{{ i }}"> {{ i }} </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-5">
+        <label for="inputColor" class="form-label">Color</label>
+        <select name="color_id" id="inputColor" class="form-select searchinput">
+          <option selected disabled value="">Choose</option>
+          {% for color in colors %}
+            <option value="{{ color.id }}">{{ color.color.capitalize() }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+    {% if property == "vehicle" %}
+      <div class="col-6">
+        <label for="inputPlateN" class="form-label">Plate number</label>
+        <input autocomplete="off" type="text" class="form-control searchinput" name="plate_number" id="inputPlateN" placeholder="Like KH-1234">
+      </div>
+    
+      <div class="col-6">
+        <label for="inputChassisN" class="form-label">Chassis number</label>
+        <input autocomplete="off" type="text" class="form-control searchinput" name="chassis_number" id="inputChassisN" placeholder="exampol 123UX67VB1123456J">
+      </div>
+    {% else %}
+      <div class="col-6">
+        <label for="inputserialN" class="form-label">serial number</label>
+        <input autocomplete="off" type="text" class="form-control searchinput" name="serial_number" id="inputSerialN" placeholder="1234">
+      </div>
+    {% endif %}
+
+
+    <div class="col-6">
+      <div class="form-check ms-lg-5">
+        <input class="form-check-input" type="checkbox" name="condtion" id="condtion" value="{{ condtion }}" checked required>
+        <label class="form-check-label" for="condtion">
+          {{ condtion }}
+        </label>
+      </div>
+    </div>
+
+    <div class="col-12" style="display: none;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="property" id="property" value="{{ property }}s" checked required>
+        <label class="form-check-label" for="gridCheck">
+        </label>
+      </div>
+    </div>
+
+
+    <div class="col-12 text-center mt-5 mb-3">
+      <small>
+        Enter description of the {{ property }} you {{ condtion }} py filling out the form above
+        <br>
+        The site will automatically search for matching on list of {{ other_condtion }} {{ property }}s
+      </small>
+    </div>
+
+
+    <div class="col-12 mb-5 mt-1 fs-5 text-center" id="target">
+      Search results will apper here
+    </div>
+
+
+    <div class="col-12 d-grid gap-2 d-md-flex justify-content-md-end">
+      <button type="submit" class="btn btn-primary mx-auto">Post as {{ condtion }}</button>
+    </div>
+      
+  </form>
+
+  <hr>
+  <div class="row my-4">
+    <div class="col">
+      <h3>All {{ other_condtion }} {{ property }}s</h3>
+    </div>
+  </div>
+  
+  {% for row in rows %}
+
+  <div class="card ms-auto me-auto mb-4 text-start" id="{{ row.id }}" style="max-width: 540px;">
+      <div class="row g-0">
+          <div class="card-header">
+              <p class="card-text">
+                  <span class="h5">{{ other_condtion }}er: {{ row.username }}</span>
+                  <br>
+                  <i><span class="h6">Tel: </span>0{{ row.phone_number }}</i>
+              </p>
+              <p class="card-text text-end">
+                  <small class="card-text ">{{ row.datet }}</small>
+              </p>
+          </div>
+          <div class="col-md-4">
+              <img src="{{ row.image_url }}" class="img-fluid me-md-3" alt="a {{ property }} image">
+          </div>
+          <div class="col-md-7 ms-3 mt-1 mb-3">
+              <h5 class="card-title">{{ row.type }}</h5>
+              <p class="card-text"><span class="h5">Brand: </span>{{ row.brand.upper() }}</p>
+              <p class="card-text"><span class="h5">Year: </span>{{ row.manuf_year }}</p>
+              <p class="card-text"><span class="h5">Color: </span>{{ row.color.capitalize() }}</p>
+              {% if property == "vehicle" %}
+                  <p class="card-text"><span class="h5">Plate number: </span>{{ row.plate_number}}</p>
+                  <p class="card-text"><span class="h5">chassis number: </span>{{ row.chassis_number }}</p>
+              {% else %}
+                  <p class="card-text"><span class="h5">serial_number:</span>{{ row.serial_number }}</p>
+              {% endif %}
+              {% if property == "other" %}
+                  <p class="card-text">
+                      <span class="h5">Description: </span><br>
+                      {{ row.desc }}
+                  </p>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+  
+{% endfor %}
+<script src="/static/search.js"></script>
+
+{% endblock %}

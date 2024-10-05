@@ -8,7 +8,7 @@ This Lost and Found Web Application was created to help citizens of Sudan, who a
 
 This platform is divided into categories like vehicles, electronics, and others to help users efficiently navigate the listings.
 
-As my first integrated project, I’m incredibly proud of what I’ve achieved with this application. While there is a chance that some errors may occur, I’m open to feedback to make it even better. Feel free to share your thoughts at salahkki@hotmail.com.
+As my first integrated project, I’m incredibly proud of what I’ve achieved with this application. While there is a chance that some errors may occur, I’m open to feedback to make it even better. Feel free to share your thoughts at salahadinkki@gmail.com.
 
 ## Features
 - **Browse Without Login**: Users can browse all lost and found posts without the need to log in.
